@@ -1,5 +1,5 @@
 ---
-title: "1.4 Doing it Bayesian"
+title: "2.2 Doing it Bayesian"
 author: "Jan Smyčka"
 date: "19/01/2025"
 output: ioslides_presentation

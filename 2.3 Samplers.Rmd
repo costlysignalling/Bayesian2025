@@ -1,5 +1,5 @@
 ---
-title: "1.5 Doing it smarter (MCMC samplers)"
+title: "2.3 Doing it smarter (MCMC samplers)"
 author: "Jan Smyčka"
 date: "19/01/2025"
 output: ioslides_presentation
