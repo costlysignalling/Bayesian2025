@@ -4,10 +4,12 @@
 library(Rlab)
 approxnormbern=rep(0,1000)
 for (i in 1:1000){
-  approxnormbern[i]=mean(rbern(1000, p=0.5))
+  approxnormbern[i]=mean(rbern(1000, p=0.1))
 }
 
 hist(approxnormbern)
+
+
 
 # Exercise 2
 
@@ -24,6 +26,8 @@ for (i in 1:1000){
 }
 hist(approxnormpoisprod)
 hist(log(approxnormpoisprod))
+
+plot(density(approxnormpoisprod))
 
 #log(150*150...)=log(150)+log(150)...
 log(150)*100

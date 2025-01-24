@@ -21,7 +21,8 @@ ttestvarmodel=alist(
 )
 
 ttestvarposterior=ulam(ttestvarmodel,
-                    data=list(heightgirlsvar=heightgirlsvar, heightboysvar=heightboysvar))
+                       data=list(heightgirlsvar=heightgirlsvar, 
+                              heightboysvar=heightboysvar))
 
 precis(ttestvarposterior)
 plot(ttestvarposterior)
@@ -31,6 +32,8 @@ girlsvarposterior=extract.samples(ttestvarposterior)$mugirls
 boysvarposterior=extract.samples(ttestvarposterior)$muboys
 par(mfrow=c(1,1))
 hist(girlsvarposterior-boysvarposterior)
+
+plot(1:500,girlsvarposterior,type="l")
 
 girlsvarposteriorsd=extract.samples(ttestvarposterior)$sigmagirls
 boysvarposteriorsd=extract.samples(ttestvarposterior)$sigmaboys
@@ -97,14 +100,16 @@ betaes=extract.samples(regresposterior)$beta
 
 girlmuses=alphaes+betaes
 summary(girlmuses)
+hist(girlmuses)
 
 # Exercise 4
 
 datareghet=data.frame(x=seq(0,10,by=0.5))
 alpha=10
 beta=5
-sigma=3
-datareghet$y=rnorm(21,alpha+beta*datareghet$x,sigma*datareghet$x)
+sigmaslope=3
+sigmaint=0
+datareghet$y=rnorm(21,alpha+beta*datareghet$x,sigmaslope*datareghet$x+sigmaint)
 plot(datareghet$y~datareghet$x)
 
 regreshetmodel=alist(
@@ -128,9 +133,12 @@ precis(regreshetposterior)
 traceplot(regreshetposterior)
 
 yexpregressionhet=link(regreshetposterior)$yexp
+dim(yexpregressionhet)
 
 yexpmeanregressionhet=apply(yexpregressionhet,2, mean)
 yexpPIregressionhet=apply(yexpregressionhet,2, PI)
+
+dev.off()
 
 plot(datareghet$y~datareghet$x)
 lines(datareghet$x , yexpmeanregressionhet)
@@ -168,6 +176,9 @@ regresbipredposterior=ulam(regresbipredmodel,
 precis(regresbipredposterior)
 traceplot(regresbipredposterior)
 
+library(scatterplot3d)
+threeD=scatterplot3d(dataregbipred$x1,dataregbipred$x2,dataregbipred$y, type = "h")
+threeD$plane3d(4.01,1.71,5.33)
 
 # Exercise 6
 
