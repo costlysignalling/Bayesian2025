@@ -23,6 +23,19 @@ zeros_total <- sum(y==0)
 lines( c(0,0) , c(zeros_work,zeros_total) , lwd=4 , col=rangi2 )
 #Blue are zeros due to drinking days
 
+#How to estimate the values back
+mixture <- ulam(
+  alist(
+    y|y>0 ~ custom( log1m(p) + poisson_lpmf(y|lambda) ),
+    y|y==0 ~ custom( log_mix( p , 0 , poisson_lpmf(0|lambda) ) ),
+    logit(p) <- ap,
+    log(lambda) <- al,
+    ap ~ dnorm(-1.5,1),
+    al ~ dnorm(1,0.5)
+  ) , data=list(y=as.integer(y)) , chains=4 )
+
+
+precis(mixture)
 
 # Discrete outcomes and decisions we make
 rd<-read.table("DictatorGameHormones.txt",sep="\t",header=T)
